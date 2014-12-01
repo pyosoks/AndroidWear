@@ -9,11 +9,14 @@ import android.widget.EditText;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.MessageApi;
+import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Wearable;
 
 public class WearActivity extends Activity
             implements GoogleApiClient.ConnectionCallbacks,
-                        GoogleApiClient.OnConnectionFailedListener{
+                        GoogleApiClient.OnConnectionFailedListener,
+                        MessageApi.MessageListener {
 
     EditText console;
     // GoogleApiClient 객체
@@ -83,5 +86,10 @@ public class WearActivity extends Activity
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         printLog("onConnectionFailed()");
+    }
+
+    @Override
+    public void onMessageReceived(MessageEvent messageEvent) {
+
     }
 }
