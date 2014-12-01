@@ -1,6 +1,7 @@
 package com.abc.datalayer;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -57,6 +58,12 @@ public class MainActivity extends Activity
 
         if(msg.equals(""))
             return;
+
+        // 비동기 작업데 전달할 파라미터를 배열에 담는다.
+        String[] params = new String[1];
+        params[0] = msg;
+        // 파라미터를 전달하면서 비동기 작업 실행 시키기
+        new SendMessageTask().execute(params);
     }
 
     // 로그 찍는 메소드
@@ -95,5 +102,14 @@ public class MainActivity extends Activity
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         printLog("onConnectionFailed()");
+    }
+
+    // 비동기 작업 객체를 생성할 클래스
+    class SendMessageTask extends AsyncTask<String, Void, Void>{
+        // UI 스레드가 아닌 다른 스레드에서 작업되는 메소드
+        @Override
+        protected Void doInBackground(String... params) {
+            return null;
+        }
     }
 }
