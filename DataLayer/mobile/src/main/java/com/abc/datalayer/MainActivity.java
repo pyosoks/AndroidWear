@@ -10,7 +10,12 @@ import android.widget.EditText;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 
 public class MainActivity extends Activity
@@ -109,7 +114,21 @@ public class MainActivity extends Activity
         // UI 스레드가 아닌 다른 스레드에서 작업되는 메소드
         @Override
         protected Void doInBackground(String... params) {
+
             return null;
         }
+    }
+
+    // 연결된 Node List 를 리턴하는 메소드
+    public Collection<String> getNodes(){
+        HashSet<String> results = new HashSet<String>();
+        // 연결된 Node List 를 읽어온다.
+        NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(gClient).await();
+        // 반복문을 돌면서 연결된 node 의 id 를 HashSet 에 담는다.
+        for(Node node : nodes.getNodes()){ // Node : com.google.android.gms.wearable
+            results.add(node.getId());
+        }
+        // 연결된 node 의 아이디 값을 담고 있는 HashSet 객체를 리턴해주기
+        return results;
     }
 }
