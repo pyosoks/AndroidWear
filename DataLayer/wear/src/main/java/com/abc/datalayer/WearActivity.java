@@ -61,6 +61,9 @@ public class WearActivity extends Activity
         // 출력할 문자열을 메세지 객체에 담는다.
         Message m = new Message();
         m.obj = msg;
+
+        //핸들러에 메세지를 보낸다.
+        handler.sendMessage(m);
     }
 
     // 핸들러 객체 정의하기
