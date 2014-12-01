@@ -10,6 +10,8 @@ import android.widget.EditText;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
@@ -114,7 +116,31 @@ public class MainActivity extends Activity
         // UI 스레드가 아닌 다른 스레드에서 작업되는 메소드
         @Override
         protected Void doInBackground(String... params) {
-
+            // 전송할 문자열을 얻어온다.
+            String msg = params[0];
+            // 연결된 node id 를 얻어온다.
+            Collection<String> nodes = getNodes();
+            // 반복문 돌면서 모든 node 에 전송한다.
+            for(final String node:nodes){
+                // 콘솔에 node id 를 출력해보기
+                printLog(node);
+                // MessageApi 를 이용해서 전송한다.
+                Wearable.MessageApi.sendMessage(  // (GoogleApiClient, node id, msg , byte[] )
+                        gClient,
+                        node,
+                        msg,
+                        new byte[0]
+                ).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
+                    @Override
+                    public void onResult(MessageApi.SendMessageResult sendMessageResult) {
+                        if(sendMessageResult.getStatus().isSuccess()) {
+                            printLog("전송 성공!");
+                        } else {
+                            printLog("전송 실패!");
+                        }
+                    }
+                });
+            }
             return null;
         }
     }
