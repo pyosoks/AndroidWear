@@ -7,8 +7,14 @@ import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
-public class MainActivity extends Activity {
+
+public class MainActivity extends Activity
+                implements GoogleApiClient.ConnectionCallbacks,
+                            GoogleApiClient.OnConnectionFailedListener {
+
     // 필요한 멤버필드 정의하기
     EditText console, inputText;
 
@@ -48,4 +54,19 @@ public class MainActivity extends Activity {
             console.append(str + "\n");
         }
     };
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
 }
