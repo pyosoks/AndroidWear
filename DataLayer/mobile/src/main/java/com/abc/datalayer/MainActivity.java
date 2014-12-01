@@ -35,6 +35,21 @@ public class MainActivity extends Activity
                 .addOnConnectionFailedListener(this)
                 .build();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // GoogleApiClient 에 연결 요청을 한다.
+        gClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        //GoogleApiClient 에 연결 해제 한다.
+        gClient.disconnect();
+        super.onStop();
+    }
+
     // 전송 버튼을 눌렀을 때 호출되는 메소드
     public void send(View v){
         // 입력한 문자열을 읽어온다.
