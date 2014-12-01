@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.Wearable;
 
 
 public class MainActivity extends Activity
@@ -17,6 +18,8 @@ public class MainActivity extends Activity
 
     // 필요한 멤버필드 정의하기
     EditText console, inputText;
+    // GoogleApiClient 객체를 멤버필드에 담기위해
+    GoogleApiClient gClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,12 @@ public class MainActivity extends Activity
         // EditText 의 참조값을 얻어와서 멤버필드에 저장하기
         console = (EditText)findViewById(R.id.console);
         inputText = (EditText)findViewById(R.id.inputText);
+        // GoogleApiClient 객체을 생성해서 멤버필드에 담기
+        gClient = new GoogleApiClient.Builder(this)
+                .addApi(Wearable.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
     }
     // 전송 버튼을 눌렀을 때 호출되는 메소드
     public void send(View v){
