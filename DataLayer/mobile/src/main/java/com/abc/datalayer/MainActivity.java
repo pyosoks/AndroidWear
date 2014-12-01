@@ -79,18 +79,21 @@ public class MainActivity extends Activity
         }
     };
 
+    // GoogleApiClient 에 연결이 되었을때 호출되는 메소드
     @Override
     public void onConnected(Bundle bundle) {
-
+        printLog("onConnected()");
     }
 
+    // GoogleApiClient 에 연결이 연기 혹은 지연되었을때 호출되는 메소드
     @Override
     public void onConnectionSuspended(int i) {
-
+        printLog("onConnectionSuspended()");
     }
 
+    // GoogleApiClient 에 연결이 실패되었을때 호출되는 메소드
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        printLog("onConnectionFailed()");
     }
 }
